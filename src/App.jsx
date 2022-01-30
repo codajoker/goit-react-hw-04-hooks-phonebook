@@ -2,7 +2,9 @@ import { useEffect, Component, useState } from 'react';
 import { Section, Form, ListContact, Filter } from './components';
 import { nanoid } from 'nanoid';
 function App() {
-  let [contacts, setContacts] = useState([]);
+  let [contacts, setContacts] = useState(() => {
+    return JSON.parse(window.localStorage.getItem('contacts'));
+  });
   let [filter, setFilter] = useState('');
   const addContact = data => {
     if (
@@ -37,14 +39,7 @@ function App() {
       return prevContacts.filter(contact => contact.id !== id);
     });
   };
-  useEffect(() => {
-    const local = localStorage.getItem('contacts');
 
-    const parse = JSON.parse(local);
-    if (parse) {
-      setContacts((contacts = parse));
-    }
-  }, []);
   useEffect(() => {
     window.localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);

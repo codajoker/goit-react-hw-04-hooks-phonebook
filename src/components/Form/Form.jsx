@@ -6,14 +6,22 @@ import { Button } from './Form.styled';
 export function Form({ onSubmit }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const onChangeName = e => {
-    const { value } = e.target;
-    setName(value);
+  const onChange = e => {
+    const { name, value } = e.target;
+    switch (name) {
+      case 'name':
+        setName(value);
+
+        break;
+      case 'number':
+        setNumber(value);
+
+        break;
+      default:
+        break;
+    }
   };
-  const onChangeNumber = e => {
-    const { value } = e.target;
-    setNumber(value);
-  };
+
   const handleSubmit = e => {
     e.preventDefault();
     onSubmit({ name, number });
@@ -29,7 +37,7 @@ export function Form({ onSubmit }) {
         Name
         <input
           value={name}
-          onChange={onChangeName}
+          onChange={onChange}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -42,7 +50,7 @@ export function Form({ onSubmit }) {
         Number{' '}
         <input
           value={number}
-          onChange={onChangeNumber}
+          onChange={onChange}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
